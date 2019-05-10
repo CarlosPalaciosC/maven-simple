@@ -59,5 +59,14 @@
       </plugin>
     </plugins>
   </build>
-
+  <repository>
+    <id>dev-azure-com-e2einretail-teamfeed</id>
+    <url>https://pkgs.dev.azure.com/e2eInretail/_packaging/TeamFeed@Local/maven/v1</url>
+    <releases>
+      <enabled>true</enabled>
+    </releases>
+    <snapshots>
+      <enabled>true</enabled>
+    </snapshots>
+</repository>
 </project>
