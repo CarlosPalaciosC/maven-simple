@@ -19,6 +19,14 @@
     </dependency>
   </dependencies>
   
+  <properties>
+		<!-- IntelliJ grouses the following dynamic properties. Workaround: Settings > Build, Execution, Development > Build Tools > Maven > Runner > Properties. Add git.commit.time and git.commit.id.abbrev with empty value. -->
+		<version.number>${git.commit.time}.${git.commit.id.abbrev}</version.number>
+		<!-- <docker.repository.name>phauer/${project.artifactId}</docker.repository.name> -->
+		<!-- Instead of docker hub, you can use your own registry: -->
+		<!--<docker.repository.name>registry.domain.de/group/${project.artifactId}</docker.repository.name>-->
+	</properties>
+  
   <build>
     <plugins>
     
@@ -57,6 +65,24 @@
                     </execution>
                 </executions>
       </plugin>
+      <plugin>
+        <groupId>pl.project13.maven</groupId>
+        <artifactId>git-commit-id-plugin</artifactId>
+        <version>2.2.4</version>
+        <executions>
+            <execution>
+                <phase>validate</phase>
+                <goals>
+                    <goal>revision</goal>
+                </goals>
+            </execution>
+        </executions>
+        <configuration>
+            <dateFormat>yyyyMMdd-HHmmss</dateFormat><!--  human-readable part of the version number -->
+            <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+            <generateGitPropertiesFile>false</generateGitPropertiesFile><!-- somehow necessary. otherwise the variables are not available in the pom -->
+        </configuration>
+    </plugin>
     </plugins>
   </build>
   <distributionManagement>
